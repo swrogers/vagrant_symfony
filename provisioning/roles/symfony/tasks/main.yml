@@ -1,5 +1,16 @@
-- name: get the symfony installer
-  raw: curl -LsS https://symfony.com/installer -o /usr/local/bin/symfony
-  
-- name: make the installer executable
-  file: path=/usr/local/bin/symfony mode=0755
+# Only need the following if using Symfony < version 4
+#- name: get the symfony installer
+#  raw: curl -LsS https://symfony.com/installer -o /usr/local/bin/symfony
+#  
+#- name: make the installer executable
+#  file: path=/usr/local/bin/symfony mode=0755
+
+- name: has symfony been installed in /vagrant/symfony before?
+  stat: path=/vagrant/symfony
+  register: symfony_stat
+
+- name: use composer to install symfony
+  become: yes
+  become_user: vagrant
+  raw: composer create-project symfony/skeleton /vagrant/symfony
+  when: symfony_stat.stat.isdir is not defined

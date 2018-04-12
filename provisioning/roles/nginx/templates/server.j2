@@ -2,7 +2,7 @@ server {
     server_name {{ item.name }};
     
     {% if item.type == "symfony" %}
-        root /vagrant/{{ item.name }}/web/;
+        root /vagrant/{{ item.name }}/public/;
     {% else %}
         root /vagrant/;
     {% endif %}
@@ -11,14 +11,14 @@ server {
         index index.php index.html index.htm;
         
         {% if item.type == "symfony" %}
-            try_files $uri /app.php$is_args$args;
+            try_files $uri /index.php$is_args$args;
         {% else %}
             try_files $uri $uri/ /index.php?$args;
         {% endif %}
     }
     
     {% if item.type == "symfony" %}
-        location ~ ^/(app_dev|config)\.php(/|$) {
+        location ~ ^/(app_dev|config|index)\.php(/|$) {
     {% else %}
         location ~ \.php$ {
     {% endif %}
@@ -31,7 +31,7 @@ server {
     }
     
     {% if item.type == "symfony" %}
-        location ~ ^/(app_dev|config)\.php(/|$) {
+        location ~ ^/(app_dev|config|index)\.php(/|$) {
     {% else %}
         location ~ \.php$ {
     {% endif %}

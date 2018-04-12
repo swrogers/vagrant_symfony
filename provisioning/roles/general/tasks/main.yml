@@ -6,3 +6,6 @@
   
 - name: reload locale
   raw: . /etc/default/locale
+  
+- name: install git
+  apt: name=git state=latest
