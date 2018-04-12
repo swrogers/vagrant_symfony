@@ -1,0 +1,12 @@
+---
+- hosts: all
+
+  become: true
+  roles:
+    - general
+    - php
+    - php-fpm
+    - composer
+    - nginx
+    - postgres
+    - symfony

@@ -1,0 +1,11 @@
+- name: copy install_composer.sh to remote machine
+  copy: src=install_composer.sh dest=/tmp/install_composer.sh
+  
+- name: convert dos file to unix file
+  raw: perl -pi -e 's/\r\n/\n/g' -- /tmp/install_composer.sh
+ 
+- name: run install_composer.sh
+  raw: bash /tmp/install_composer.sh
+ 
+- name: mv composer to /usr/local/bin/
+  raw: mv composer.phar /usr/local/bin/composer
